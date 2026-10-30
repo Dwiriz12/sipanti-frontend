@@ -1,4 +1,6 @@
 import { Users } from 'lucide-react'
+import './Header.css'
+import { Link } from 'react-router-dom'
 
 function Header() {
   return (
@@ -7,16 +9,12 @@ function Header() {
 
         <div className="brand">
           <div className="brand-logo">
-            AM
+            <img
+              src="/materi/logo-panti.png"
+              alt="Logo Panti Asuhan Amal Mulia Qurani"
+            />
           </div>
 
-          <div className="brand-text">
-            <h1>SIPANTI</h1>
-            <p>
-              Sistem Informasi Pengelolaan<br />
-              Panti Asuhan Amal Mulia Qurani
-            </p>
-          </div>
         </div>
 
         <nav className="nav-menu">
@@ -26,10 +24,10 @@ function Header() {
           <a href="#kontak">Kontak</a>
         </nav>
 
-        <button className="login-button">
+        <Link to="/login" className="login-button">
           <Users size={17} />
-          Login Pengurus
-        </button>
+          Login 
+        </Link>
 
       </div>
     </header>

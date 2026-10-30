@@ -1,12 +1,10 @@
+import './footer.css'
+
 function Footer() {
   return (
     <footer className="footer">
 
       <div className="footer-brand">
-        <div className="footer-logo">
-          AM
-        </div>
-
         <div>
           <strong>SIPANTI</strong>
           <p>
@@ -14,10 +12,6 @@ function Footer() {
             Panti Asuhan Amal Mulia Qurani
           </p>
         </div>
-      </div>
-
-      <div className="footer-motto">
-        Berbagi, Peduli, Menginspirasi
       </div>
 
       <div className="footer-copy">

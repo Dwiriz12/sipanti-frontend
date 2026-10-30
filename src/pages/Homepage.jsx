@@ -7,7 +7,7 @@ function Homepage() {
     <div className="homepage">
 
 
-      <header/>
+      <Header />
 
       <main>
 
@@ -31,20 +31,13 @@ function Homepage() {
               dhuafa melalui pendidikan, kasih sayang, dan nilai-nilai islami.
             </p>
 
-            <button className="hero-button">
-              Login Pengurus
-              <span>→</span>
-            </button>
-
           </div>
 
           <div className="hero-image">
-            <div className="building-placeholder">
-              <div className="building-icon">⌂</div>
-              <h4>PANTI ASUHAN</h4>
-              <h5>AMAL MULIA QURANI</h5>
-              <p>Berbagi, Peduli, Menginspirasi</p>
-            </div>
+            <img
+              src="/materi/Foto bareng anak asuh3.jpeg"
+              alt="Panti Asuhan Amal Mulia Qurani"
+            />
           </div>
 
         </section>
@@ -186,6 +179,14 @@ function Homepage() {
               </div>
             </div>
 
+            <div className="stat-card">
+              <span className="stat-icon">♡</span>
+              <div>
+                <strong>Donasi</strong>
+                <p>Mandiri 130-00-1387135-8</p>
+              </div>
+            </div>
+
           </div>
 
         </section>
@@ -219,21 +220,27 @@ function Homepage() {
               </div>
             </div>
 
-
             <div className="contact-item">
-              <span>☎</span>
+              <span>◎</span>
               <div>
-                <strong>Telepon</strong>
-                <p>(022) 1234 5678</p>
+                <strong>Instagram</strong>
+                <p>@amalmuliaqurani</p>
               </div>
             </div>
 
+            <div className="contact-item">
+              <span>☏</span>
+              <div>
+                <strong>WhatsApp</strong>
+                <p>0818 0426 1299</p>
+              </div>
+            </div>
 
             <div className="contact-item">
               <span>✉</span>
               <div>
                 <strong>Email</strong>
-                <p>panti.amal@qurani.or.id</p>
+                <p>panti.amal@gmail.com</p>
               </div>
             </div>
 
@@ -243,7 +250,7 @@ function Homepage() {
 
       </main>
 
-      <footer/>
+      <Footer />
 
     </div>
   )
