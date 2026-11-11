@@ -1,0 +1,83 @@
+.stat-ringkasan {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.ringkasan-card {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e4ecea;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(18, 74, 67, 0.04);
+}
+
+.ringkasan-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ringkasan-icon.green {
+  color: #00766b;
+  background: #e5f4f0;
+}
+
+.ringkasan-icon.orange {
+  color: #b87916;
+  background: #fff2df;
+}
+
+.ringkasan-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ringkasan-label {
+  color: #4d5f5d;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ringkasan-nilai {
+  color: #176d64;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.ringkasan-card:nth-child(2) .ringkasan-nilai {
+  color: #b87916;
+}
+
+.ringkasan-keterangan {
+  color: #657572;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .stat-ringkasan {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .stat-ringkasan {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .ringkasan-card {
+    padding: 14px;
+  }
+}

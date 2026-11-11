@@ -1,6 +1,6 @@
-import './Homepage.css'
+import '../styles/pages/Homepage.css'
 import Header from '../components/Header'
-import Footer from '../components/footer'
+import Footer from '../components/Footer'
 
 function Homepage() {
   return (
@@ -35,7 +35,7 @@ function Homepage() {
 
           <div className="hero-image">
             <img
-              src="/materi/Foto bareng anak asuh3.jpeg"
+              src="/images/foto-anak-asuh.jpeg"
               alt="Panti Asuhan Amal Mulia Qurani"
             />
           </div>

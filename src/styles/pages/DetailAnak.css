@@ -1,0 +1,224 @@
+.detail-profil {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e4ecea;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(18, 74, 67, 0.04);
+}
+
+.detail-profil-teks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.detail-profil-judul {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detail-profil-judul h2 {
+  margin: 0;
+  color: #172b2a;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.detail-profil-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 34px;
+}
+
+.detail-profil-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.detail-profil-meta span {
+  color: #8a9794;
+  font-size: 10px;
+}
+
+.detail-profil-meta strong {
+  color: #2c403d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 16px 22px;
+}
+
+.detail-grid.tiga {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.detail-item span {
+  color: #8a9794;
+  font-size: 10px;
+}
+
+.detail-item strong {
+  color: #2c403d;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.detail-keterangan {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #edf2f1;
+}
+
+.detail-keterangan span {
+  color: #8a9794;
+  font-size: 10px;
+}
+
+.detail-keterangan p {
+  margin: 0;
+  color: #3d514e;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.detail-dokumen,
+.detail-riwayat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dokumen-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #edf2f1;
+  border-radius: 9px;
+}
+
+.dokumen-item-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #e9f6f2;
+  color: #00766b;
+}
+
+.dokumen-item-teks {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dokumen-item-teks strong {
+  color: #2c403d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dokumen-item-teks span {
+  overflow: hidden;
+  color: #95a19e;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dokumen-item-unduh {
+  flex-shrink: 0;
+  color: #95a19e;
+}
+
+.detail-riwayat {
+  gap: 0;
+}
+
+.riwayat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 2px;
+  border-bottom: 1px solid #edf2f1;
+  color: #2c403d;
+  font-size: 12px;
+}
+
+.riwayat-item:last-child {
+  border-bottom: none;
+}
+
+.riwayat-item em {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #e9f6f2;
+  color: #00766b;
+  font-size: 10px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.detail-aksi {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 6px 0 20px;
+}
+
+@media (max-width: 800px) {
+  .detail-grid.tiga {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-profil {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .detail-grid.tiga {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-profil-meta {
+    gap: 18px;
+  }
+
+  .detail-aksi {
+    justify-content: stretch;
+  }
+}

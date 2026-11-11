@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import './Login.css'
+import { useNavigate } from 'react-router-dom'
+import '../styles/pages/Login.css'
 import { Users, Lock, Mail, ShieldCheck, Headphones, Eye } from 'lucide-react'
 
 function LoginPengurus() {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
@@ -16,14 +19,23 @@ function LoginPengurus() {
       newErrors.email = 'Email atau username wajib diisi'
     }
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!email.trim()) {
+      newErrors.email = 'Email wajib diisi'
+    } else if (!emailPattern.test(email)) {
+      newErrors.email = 'Format email tidak valid'
+    }
+
     if (!password.trim()) {
       newErrors.password = 'Password wajib diisi'
     }
 
+
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      console.log('Login berhasil')
+      navigate('/dashboard')
     }
   }
 
@@ -44,7 +56,7 @@ function LoginPengurus() {
 
             <div className="login-logo">
               <img
-                src="/materi/logo-panti.png"
+                src="/images/logo-panti.png"
                 alt="Logo Panti Asuhan Amal Mulia Qurani"
               />
             </div>

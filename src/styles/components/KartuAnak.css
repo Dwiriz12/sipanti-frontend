@@ -1,0 +1,225 @@
+.daftar-anak {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.daftar-anak-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.daftar-anak-list {
+  grid-template-columns: 1fr;
+}
+
+/* BADGE */
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-status.aktif {
+  background: #e5f4ee;
+  color: #08735f;
+}
+
+.badge-status.alumni {
+  background: #fff3e1;
+  color: #b87916;
+}
+
+.badge-status.nonaktif {
+  background: #fdecea;
+  color: #c35638;
+}
+
+/* KARTU */
+
+.kartu-anak {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e4ecea;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(18, 74, 67, 0.04);
+  transition: 0.2s;
+}
+
+.kartu-anak:hover {
+  border-color: #cfe0dc;
+  box-shadow: 0 8px 20px rgba(18, 74, 67, 0.07);
+}
+
+.kartu-anak h3 {
+  margin: 0;
+  color: #1c2928;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.kartu-anak-atas {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.kartu-anak-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #6e7d7a;
+  font-size: 11px;
+}
+
+.kartu-anak-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.kartu-anak-meta svg {
+  flex-shrink: 0;
+  color: #8fa09c;
+}
+
+.kartu-anak-aksi {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #edf2f1;
+}
+
+.kartu-anak-aksi a,
+.kartu-anak-aksi button {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #dce8e5;
+  border-radius: 7px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.aksi-detail {
+  color: #00766b;
+}
+
+.aksi-detail:hover {
+  background: #e9f6f2;
+}
+
+.aksi-edit {
+  color: #b87916;
+}
+
+.aksi-edit:hover {
+  background: #fff5e6;
+}
+
+.aksi-hapus {
+  border-color: #f3d7d0 !important;
+  color: #c35638;
+}
+
+.aksi-hapus:hover {
+  background: #fdf0ec;
+}
+
+/* LIST MODE */
+
+.kartu-anak-list {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+}
+
+.kartu-anak-identitas {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kartu-anak-judul {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kartu-anak-list .kartu-anak-meta {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.kartu-anak-list .kartu-anak-aksi {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.kartu-anak-list .kartu-anak-aksi a,
+.kartu-anak-list .kartu-anak-aksi button {
+  flex: 0 0 auto;
+  padding: 0 10px;
+}
+
+@media (max-width: 1400px) {
+  .daftar-anak-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .daftar-anak-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .kartu-anak-list {
+    flex-wrap: wrap;
+  }
+
+  .kartu-anak-list .kartu-anak-aksi {
+    width: 100%;
+  }
+
+  .kartu-anak-list .kartu-anak-aksi a,
+  .kartu-anak-list .kartu-anak-aksi button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .daftar-anak-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

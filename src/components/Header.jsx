@@ -1,5 +1,5 @@
 import { Users } from 'lucide-react'
-import './Header.css'
+import '../styles/components/Header.css'
 import { Link } from 'react-router-dom'
 
 function Header() {
@@ -10,7 +10,7 @@ function Header() {
         <div className="brand">
           <div className="brand-logo">
             <img
-              src="/materi/logo-panti.png"
+              src="/images/logo-panti.png"
               alt="Logo Panti Asuhan Amal Mulia Qurani"
             />
           </div>
