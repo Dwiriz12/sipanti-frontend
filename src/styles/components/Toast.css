@@ -1,0 +1,74 @@
+.toast-wadah {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 13px 16px;
+  background: #ffffff;
+  border-left: 4px solid #00695f;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(15, 60, 55, 0.14);
+  color: #172b2a;
+  font-size: 13px;
+  line-height: 1.5;
+  pointer-events: auto;
+  animation: toast-masuk 0.25s ease-out;
+}
+
+.toast svg {
+  flex-shrink: 0;
+}
+
+.toast-sukses {
+  border-left-color: #00695f;
+}
+
+.toast-sukses svg {
+  color: #00695f;
+}
+
+.toast-gagal {
+  border-left-color: #c0392b;
+}
+
+.toast-gagal svg {
+  color: #c0392b;
+}
+
+@keyframes toast-masuk {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .toast-wadah {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .toast {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+}

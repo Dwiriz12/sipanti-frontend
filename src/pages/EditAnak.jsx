@@ -3,10 +3,12 @@ import { ArrowLeft } from 'lucide-react'
 import PageShell from '../components/PageShell'
 import PageHeader from '../components/PageHeader'
 import FormAnak from '../components/FormAnak'
+import { useToast } from '../components/toastContext'
 
 function EditAnak({ daftarAnak, onUpdate }) {
   const { id } = useParams()
   const navigate = useNavigate()
+  const toast = useToast()
   const anak = daftarAnak.find((item) => item.id === id)
 
   if (!anak) {
@@ -30,6 +32,7 @@ function EditAnak({ daftarAnak, onUpdate }) {
 
   function handleSubmit(data) {
     onUpdate(anak.id, data)
+    toast.sukses('Perubahan data anak asuh berhasil disimpan.')
     navigate('/data-anak')
   }
 

@@ -1,11 +1,22 @@
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, Users, LogOut } from 'lucide-react'
+import ConfirmDialog from './ConfirmDialog'
+import { useToast } from './toastContext'
 import '../styles/components/Sidebar.css'
 
 function Sidebar() {
   const navigate = useNavigate()
+  const toast = useToast()
+  const [bukaKonfirmasi, setBukaKonfirmasi] = useState(false)
 
   const handleLogout = () => {
+    setBukaKonfirmasi(true)
+  }
+
+  const konfirmasiLogout = () => {
+    setBukaKonfirmasi(false)
+    toast.sukses('Anda berhasil keluar dari sistem.')
     navigate('/login')
   }
 
@@ -67,6 +78,16 @@ function Sidebar() {
         </button>
 
       </div>
+
+      <ConfirmDialog
+        buka={bukaKonfirmasi}
+        judul="Keluar dari sistem?"
+        pesan="Anda akan diarahkan kembali ke halaman login. Pastikan semua pekerjaan sudah tersimpan."
+        labelKonfirmasi="Ya, Keluar"
+        tipe="biasa"
+        onKonfirmasi={konfirmasiLogout}
+        onBatal={() => setBukaKonfirmasi(false)}
+      />
 
     </aside>
   )

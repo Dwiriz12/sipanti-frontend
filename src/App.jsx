@@ -7,6 +7,7 @@ import DataAnak from './pages/DataAnak'
 import DetailAnak from './pages/DetailAnak'
 import TambahAnak from './pages/TambahAnak'
 import EditAnak from './pages/EditAnak'
+import { ToastProvider } from './components/ToastProvider'
 import { dataAnakAwal, buatIdAnak } from './data/anakAsuh'
 
 function App() {
@@ -31,29 +32,31 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/data-anak"
-          element={<DataAnak daftarAnak={daftarAnak} onHapus={hapusAnak} />}
-        />
-        <Route
-          path="/data-anak/:id"
-          element={<DetailAnak daftarAnak={daftarAnak} />}
-        />
-        <Route
-          path="/tambah-anak"
-          element={<TambahAnak onTambah={tambahAnak} />}
-        />
-        <Route
-          path="/edit-anak/:id"
-          element={
-            <EditAnak daftarAnak={daftarAnak} onUpdate={updateAnak} />
-          }
-        />
-      </Routes>
+      <ToastProvider>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/data-anak"
+            element={<DataAnak daftarAnak={daftarAnak} onHapus={hapusAnak} />}
+          />
+          <Route
+            path="/data-anak/:id"
+            element={<DetailAnak daftarAnak={daftarAnak} />}
+          />
+          <Route
+            path="/tambah-anak"
+            element={<TambahAnak onTambah={tambahAnak} />}
+          />
+          <Route
+            path="/edit-anak/:id"
+            element={
+              <EditAnak daftarAnak={daftarAnak} onUpdate={updateAnak} />
+            }
+          />
+        </Routes>
+      </ToastProvider>
     </BrowserRouter>
   )
 }

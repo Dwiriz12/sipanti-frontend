@@ -7,10 +7,13 @@ import StatRingkasan from '../components/StatRingkasan'
 import ToolbarAnak from '../components/ToolbarAnak'
 import DaftarAnak from '../components/DaftarAnak'
 import PaginationAnak from '../components/PaginationAnak'
+import ConfirmDialog from '../components/ConfirmDialog'
+import { useToast } from '../components/toastContext'
 
 const PER_HALAMAN_AWAL = 8
 
 function DataAnak({ daftarAnak, onHapus }) {
+  const toast = useToast()
   const [cari, setCari] = useState('')
   const [status, setStatus] = useState('Semua')
   const [gender, setGender] = useState('Semua')
@@ -18,6 +21,7 @@ function DataAnak({ daftarAnak, onHapus }) {
   const [mode, setMode] = useState('grid')
   const [halaman, setHalaman] = useState(1)
   const [perHalaman, setPerHalaman] = useState(PER_HALAMAN_AWAL)
+  const [anakDihapus, setAnakDihapus] = useState(null)
 
   function ubahCari(nilai) {
     setCari(nilai)
@@ -51,7 +55,7 @@ function DataAnak({ daftarAnak, onHapus }) {
       const cocokCari =
         kataKunci === '' ||
         anak.nama.toLowerCase().includes(kataKunci) ||
-        anak.sekolah.toLowerCase().includes(kataKunci)
+        (anak.sekolah ?? '').toLowerCase().includes(kataKunci)
 
       const cocokStatus = status === 'Semua' || anak.status === status
       const cocokGender = gender === 'Semua' || anak.jenisKelamin === gender
@@ -78,11 +82,13 @@ function DataAnak({ daftarAnak, onHapus }) {
   const anakTampil = anakTersaring.slice(mulai, akhir)
 
   function handleHapus(anak) {
-    const setuju = window.confirm(`Hapus data ${anak.nama} dari daftar anak asuh?`)
+    setAnakDihapus(anak)
+  }
 
-    if (setuju) {
-      onHapus(anak.id)
-    }
+  function konfirmasiHapus() {
+    onHapus(anakDihapus.id)
+    toast.sukses(`Data ${anakDihapus.nama} berhasil dihapus.`)
+    setAnakDihapus(null)
   }
 
   return (
@@ -152,6 +158,16 @@ function DataAnak({ daftarAnak, onHapus }) {
           />
         </>
       )}
+
+      <ConfirmDialog
+        buka={Boolean(anakDihapus)}
+        judul="Hapus data anak asuh?"
+        pesan={`Data ${anakDihapus?.nama ?? ''} akan dihapus permanen dari daftar anak asuh.`}
+        labelKonfirmasi="Ya, Hapus"
+        tipe="bahaya"
+        onKonfirmasi={konfirmasiHapus}
+        onBatal={() => setAnakDihapus(null)}
+      />
     </PageShell>
   )
 }
