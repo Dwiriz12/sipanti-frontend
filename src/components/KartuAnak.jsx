@@ -58,7 +58,7 @@ function KartuAnak({ anak, mode, onHapus }) {
       </span>
       <span>
         <GraduationCap size={14} />
-        {anak.sekolah}
+        {anak.sekolah || 'Tidak bersekolah'}
       </span>
       <span>
         <CalendarDays size={14} />

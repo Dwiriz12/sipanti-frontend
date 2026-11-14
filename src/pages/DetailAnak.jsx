@@ -9,7 +9,7 @@ import {
   Pencil,
   UserRound
 } from 'lucide-react'
-import { formatTanggal } from '../data/anakAsuh'
+import { formatTanggal, statusPendidikanAnak } from '../data/anakAsuh'
 import PageShell from '../components/PageShell'
 import PageHeader from '../components/PageHeader'
 import AvatarAnak from '../components/AvatarAnak'
@@ -94,10 +94,40 @@ function DetailAnak({ daftarAnak }) {
 
       <SectionDetail Ikon={GraduationCap} judul="Informasi Pendidikan">
         <div className="detail-grid tiga">
-          <ItemDetail label="Sekolah" nilai={anak.sekolah} />
-          <ItemDetail label="Kelas" nilai={anak.kelas} />
-          <ItemDetail label="Tahun Masuk" nilai={anak.tahunMasuk} />
+          <ItemDetail
+            label="Status Pendidikan"
+            nilai={statusPendidikanAnak(anak)}
+          />
+
+          {statusPendidikanAnak(anak) === 'Sedang Sekolah' && (
+            <>
+              <ItemDetail label="Sekolah" nilai={anak.sekolah} />
+              <ItemDetail label="Kelas" nilai={anak.kelas} />
+              <ItemDetail label="Tahun Masuk Sekolah" nilai={anak.tahunMasuk} />
+            </>
+          )}
+
+          {statusPendidikanAnak(anak) === 'Sedang Kuliah' && (
+            <>
+              <ItemDetail label="Kampus" nilai={anak.sekolah} />
+              <ItemDetail label="Semester" nilai={anak.semester} />
+              <ItemDetail label="Tahun Masuk Kuliah" nilai={anak.tahunMasuk} />
+            </>
+          )}
+
+          {statusPendidikanAnak(anak) === 'Sudah Lulus' && (
+            <>
+              <ItemDetail label="Sekolah/Kampus Terakhir" nilai={anak.sekolah} />
+              <ItemDetail label="Tahun Lulus" nilai={anak.tahunLulus} />
+            </>
+          )}
         </div>
+
+        {statusPendidikanAnak(anak) === 'Belum/Tidak Sekolah' && (
+          <p className="detail-kosong-teks">
+            Anak belum atau tidak sedang bersekolah.
+          </p>
+        )}
       </SectionDetail>
 
       <SectionDetail Ikon={HeartPulse} judul="Informasi Kesehatan">

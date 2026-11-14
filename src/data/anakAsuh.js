@@ -24,6 +24,19 @@ export function formatTanggal(tanggal) {
   return `${Number(hari)} ${namaBulan} ${tahun}`
 }
 
+export const OPSI_STATUS_PENDIDIKAN = [
+  'Belum/Tidak Sekolah',
+  'Sedang Sekolah',
+  'Sedang Kuliah',
+  'Sudah Lulus'
+]
+
+export function statusPendidikanAnak(anak) {
+  if (anak.statusPendidikan) return anak.statusPendidikan
+
+  return anak.sekolah ? 'Sedang Sekolah' : 'Belum/Tidak Sekolah'
+}
+
 export function hitungUsia(tanggalLahir) {
   if (!tanggalLahir) return ''
 
@@ -88,6 +101,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2014-06-03',
     usia: '12 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 1',
     kelas: '7',
     tahunMasuk: '2024',
@@ -111,6 +125,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2013-02-20',
     usia: '13 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Islam Al-Falah',
     kelas: '8',
     tahunMasuk: '2024',
@@ -134,6 +149,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2015-03-10',
     usia: '11 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SD Islam Terpadu',
     kelas: '5',
     tahunMasuk: '2024',
@@ -157,6 +173,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2014-04-05',
     usia: '12 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 3',
     kelas: '7',
     tahunMasuk: '2024',
@@ -180,6 +197,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2016-01-12',
     usia: '10 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SD Islam Terpadu',
     kelas: '4',
     tahunMasuk: '2024',
@@ -203,6 +221,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2015-07-18',
     usia: '11 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SD Islam Al-Falah',
     kelas: '5',
     tahunMasuk: '2024',
@@ -226,6 +245,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2013-09-22',
     usia: '13 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 3',
     kelas: '8',
     tahunMasuk: '2024',
@@ -249,6 +269,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2012-03-14',
     usia: '14 Tahun',
     status: 'Alumni',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMA Negeri 1',
     kelas: '10',
     tahunMasuk: '2023',
@@ -272,6 +293,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2016-11-02',
     usia: '10 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SD Muhammadiyah',
     kelas: '4',
     tahunMasuk: '2024',
@@ -295,6 +317,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2014-08-30',
     usia: '12 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 4',
     kelas: '7',
     tahunMasuk: '2024',
@@ -318,6 +341,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2011-05-07',
     usia: '15 Tahun',
     status: 'Alumni',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMA Islam Terpadu',
     kelas: '11',
     tahunMasuk: '2023',
@@ -341,6 +365,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2013-12-18',
     usia: '13 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Islam Al-Azhar',
     kelas: '8',
     tahunMasuk: '2024',
@@ -364,6 +389,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2014-02-11',
     usia: '12 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 2',
     kelas: '7',
     tahunMasuk: '2025',
@@ -387,6 +413,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2015-04-09',
     usia: '11 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SD Negeri 5',
     kelas: '5',
     tahunMasuk: '2025',
@@ -410,6 +437,7 @@ export const dataAnakAwal = [
     tanggalLahir: '2014-10-27',
     usia: '12 Tahun',
     status: 'Aktif',
+    statusPendidikan: 'Sedang Sekolah',
     sekolah: 'SMP Negeri 5',
     kelas: '7',
     tahunMasuk: '2025',

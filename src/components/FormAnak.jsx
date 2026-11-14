@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, UploadCloud, FileText, X } from 'lucide-react'
-import { hitungUsia } from '../data/anakAsuh'
+import { hitungUsia, OPSI_STATUS_PENDIDIKAN, statusPendidikanAnak } from '../data/anakAsuh'
 import '../styles/components/FormAnak.css'
 
 const DOKUMEN_AWAL = [
@@ -18,9 +18,12 @@ const FORM_KOSONG = {
   tanggalLahir: '',
   usia: '',
   status: 'Aktif',
+  statusPendidikan: 'Sedang Sekolah',
   sekolah: '',
   kelas: '',
+  semester: '',
   tahunMasuk: '',
+  tahunLulus: '',
   golonganDarah: '',
   riwayatPenyakit: '',
   alergi: '',
@@ -39,9 +42,7 @@ const FIELD_WAJIB = [
   ['tempatLahir', 'Tempat lahir'],
   ['tanggalLahir', 'Tanggal lahir'],
   ['usia', 'Usia'],
-  ['sekolah', 'Sekolah'],
-  ['kelas', 'Kelas'],
-  ['tahunMasuk', 'Tahun masuk'],
+  ['statusPendidikan', 'Status pendidikan'],
   ['golonganDarah', 'Golongan darah'],
   ['tanggalMasukPanti', 'Tanggal masuk panti'],
   ['asalDaerah', 'Asal daerah'],
@@ -50,6 +51,7 @@ const FIELD_WAJIB = [
 ]
 
 const OPSI_KELAS = Array.from({ length: 12 }, (_, index) => String(index + 1))
+const OPSI_SEMESTER = Array.from({ length: 14 }, (_, index) => String(index + 1))
 
 function Field({ label, wajib, catatan, lebar, children }) {
   return (
@@ -66,12 +68,21 @@ function Field({ label, wajib, catatan, lebar, children }) {
 
 function FormAnak({ initialData, onSubmit, labelTombol = 'Tambah Anak' }) {
   const navigate = useNavigate()
-  const [form, setForm] = useState(() => ({
-    ...FORM_KOSONG,
-    ...initialData,
-    dokumen:
-      initialData?.dokumen?.length > 0 ? initialData.dokumen : DOKUMEN_AWAL
-  }))
+  const [form, setForm] = useState(() => {
+    const awal = {
+      ...FORM_KOSONG,
+      ...initialData,
+      dokumen:
+        initialData?.dokumen?.length > 0 ? initialData.dokumen : DOKUMEN_AWAL
+    }
+
+    return {
+      ...awal,
+      statusPendidikan: initialData
+        ? statusPendidikanAnak(awal)
+        : awal.statusPendidikan
+    }
+  })
   const [pesan, setPesan] = useState('')
 
   function handleChange(event) {
@@ -82,6 +93,32 @@ function FormAnak({ initialData, onSubmit, labelTombol = 'Tambah Anak' }) {
 
       if (name === 'tanggalLahir') {
         berikutnya.usia = hitungUsia(value)
+      }
+
+      if (name === 'statusPendidikan') {
+        if (value === 'Belum/Tidak Sekolah') {
+          berikutnya.sekolah = ''
+          berikutnya.kelas = ''
+          berikutnya.semester = ''
+          berikutnya.tahunMasuk = ''
+          berikutnya.tahunLulus = ''
+        }
+
+        if (value === 'Sedang Sekolah') {
+          berikutnya.semester = ''
+          berikutnya.tahunLulus = ''
+        }
+
+        if (value === 'Sedang Kuliah') {
+          berikutnya.kelas = ''
+          berikutnya.tahunLulus = ''
+        }
+
+        if (value === 'Sudah Lulus') {
+          berikutnya.kelas = ''
+          berikutnya.semester = ''
+          berikutnya.tahunMasuk = ''
+        }
       }
 
       return berikutnya
@@ -150,9 +187,29 @@ function FormAnak({ initialData, onSubmit, labelTombol = 'Tambah Anak' }) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    const fieldKurang = FIELD_WAJIB.filter(
-      ([nama]) => !String(form[nama] ?? '').trim()
-    ).map(([, label]) => label)
+    const wajibPendidikan =
+      form.statusPendidikan === 'Sedang Sekolah'
+        ? [
+            ['sekolah', 'Sekolah'],
+            ['kelas', 'Kelas'],
+            ['tahunMasuk', 'Tahun masuk sekolah']
+          ]
+        : form.statusPendidikan === 'Sedang Kuliah'
+          ? [
+              ['sekolah', 'Kampus'],
+              ['semester', 'Semester'],
+              ['tahunMasuk', 'Tahun masuk kuliah']
+            ]
+          : form.statusPendidikan === 'Sudah Lulus'
+            ? [
+                ['sekolah', 'Sekolah/kampus terakhir'],
+                ['tahunLulus', 'Tahun lulus']
+              ]
+            : []
+
+    const fieldKurang = [...FIELD_WAJIB, ...wajibPendidikan]
+      .filter(([nama]) => !String(form[nama] ?? '').trim())
+      .map(([, label]) => label)
 
     const dokumenKurang = form.dokumen
       .filter((dokumen) => dokumen.wajib && !dokumen.namaFile)
@@ -277,38 +334,130 @@ function FormAnak({ initialData, onSubmit, labelTombol = 'Tambah Anak' }) {
         <legend>Informasi Pendidikan</legend>
 
         <div className="form-grid tiga">
-          <Field label="Sekolah" wajib>
-            <input
-              type="text"
-              name="sekolah"
-              value={form.sekolah}
+          <Field label="Status Pendidikan" wajib lebar>
+            <select
+              name="statusPendidikan"
+              value={form.statusPendidikan}
               onChange={handleChange}
-              placeholder="Masukkan nama sekolah"
-            />
-          </Field>
-
-          <Field label="Kelas" wajib>
-            <select name="kelas" value={form.kelas} onChange={handleChange}>
-              <option value="">Masukkan kelas</option>
-              {OPSI_KELAS.map((kelas) => (
-                <option value={kelas} key={kelas}>
-                  {kelas}
+            >
+              {OPSI_STATUS_PENDIDIKAN.map((status) => (
+                <option value={status} key={status}>
+                  {status}
                 </option>
               ))}
             </select>
           </Field>
 
-          <Field label="Tahun Masuk" wajib>
-            <input
-              type="number"
-              name="tahunMasuk"
-              value={form.tahunMasuk}
-              onChange={handleChange}
-              placeholder="Pilih tahun masuk"
-              min="2000"
-              max="2100"
-            />
-          </Field>
+          {form.statusPendidikan === 'Sedang Sekolah' && (
+            <>
+              <Field label="Sekolah" wajib>
+                <input
+                  type="text"
+                  name="sekolah"
+                  value={form.sekolah}
+                  onChange={handleChange}
+                  placeholder="Masukkan nama sekolah"
+                />
+              </Field>
+
+              <Field label="Kelas" wajib>
+                <select name="kelas" value={form.kelas} onChange={handleChange}>
+                  <option value="">Masukkan kelas</option>
+                  {OPSI_KELAS.map((kelas) => (
+                    <option value={kelas} key={kelas}>
+                      {kelas}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+
+              <Field label="Tahun Masuk Sekolah" wajib>
+                <input
+                  type="number"
+                  name="tahunMasuk"
+                  value={form.tahunMasuk}
+                  onChange={handleChange}
+                  placeholder="Pilih tahun masuk"
+                  min="2000"
+                  max="2100"
+                />
+              </Field>
+            </>
+          )}
+
+          {form.statusPendidikan === 'Sedang Kuliah' && (
+            <>
+              <Field label="Kampus" wajib>
+                <input
+                  type="text"
+                  name="sekolah"
+                  value={form.sekolah}
+                  onChange={handleChange}
+                  placeholder="Masukkan nama kampus"
+                />
+              </Field>
+
+              <Field label="Semester" wajib>
+                <select
+                  name="semester"
+                  value={form.semester}
+                  onChange={handleChange}
+                >
+                  <option value="">Pilih semester</option>
+                  {OPSI_SEMESTER.map((semester) => (
+                    <option value={semester} key={semester}>
+                      {semester}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+
+              <Field label="Tahun Masuk Kuliah" wajib>
+                <input
+                  type="number"
+                  name="tahunMasuk"
+                  value={form.tahunMasuk}
+                  onChange={handleChange}
+                  placeholder="Pilih tahun masuk"
+                  min="1980"
+                  max="2100"
+                />
+              </Field>
+            </>
+          )}
+
+          {form.statusPendidikan === 'Sudah Lulus' && (
+            <>
+              <Field label="Sekolah/Kampus Terakhir" wajib>
+                <input
+                  type="text"
+                  name="sekolah"
+                  value={form.sekolah}
+                  onChange={handleChange}
+                  placeholder="Masukkan sekolah atau kampus terakhir"
+                />
+              </Field>
+
+              <Field label="Tahun Lulus" wajib>
+                <input
+                  type="number"
+                  name="tahunLulus"
+                  value={form.tahunLulus}
+                  onChange={handleChange}
+                  placeholder="Pilih tahun lulus"
+                  min="1980"
+                  max="2100"
+                />
+              </Field>
+            </>
+          )}
+
+          {form.statusPendidikan === 'Belum/Tidak Sekolah' && (
+            <p className="form-catatan">
+              Tidak perlu mengisi data sekolah. Informasi pendidikan bisa
+              dilengkapi nanti saat anak mulai bersekolah.
+            </p>
+          )}
         </div>
       </fieldset>
 
