@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import {
   Eye,
-  Pencil,
   Trash2,
   UserRound,
   GraduationCap,
@@ -25,10 +24,6 @@ function AksiKartu({ anak, onHapus }) {
       <Link to={`/data-anak/${anak.id}`} className="aksi-detail">
         <Eye size={15} />
         Detail
-      </Link>
-      <Link to={`/edit-anak/${anak.id}`} className="aksi-edit">
-        <Pencil size={15} />
-        Edit
       </Link>
       <button
         type="button"

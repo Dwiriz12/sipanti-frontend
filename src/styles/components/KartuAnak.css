@@ -131,14 +131,6 @@
   background: #e9f6f2;
 }
 
-.aksi-edit {
-  color: #b87916;
-}
-
-.aksi-edit:hover {
-  background: #fff5e6;
-}
-
 .aksi-hapus {
   border-color: #f3d7d0 !important;
   color: #c35638;
