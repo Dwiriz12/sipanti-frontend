@@ -3,13 +3,38 @@ import { ArrowLeft } from 'lucide-react'
 import PageShell from '../components/PageShell'
 import PageHeader from '../components/PageHeader'
 import FormAnak from '../components/FormAnak'
+import { SkeletonDetail, PeringatanError } from '../components/StatusData'
 import { useToast } from '../components/toastContext'
 
-function EditAnak({ daftarAnak, onUpdate }) {
+function EditAnak({ daftarAnak, onUpdate, memuat, pesanError, onMuatUlang }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const toast = useToast()
   const anak = daftarAnak.find((item) => item.id === id)
+
+  if (memuat) {
+    return (
+      <PageShell>
+        <PageHeader
+          judul="Edit Data Anak Asuh"
+          subjudul="Perbarui informasi anak asuh"
+        />
+        <SkeletonDetail />
+      </PageShell>
+    )
+  }
+
+  if (pesanError) {
+    return (
+      <PageShell>
+        <PageHeader
+          judul="Edit Data Anak Asuh"
+          subjudul="Perbarui informasi anak asuh"
+        />
+        <PeringatanError pesan={pesanError} onMuatUlang={onMuatUlang} />
+      </PageShell>
+    )
+  }
 
   if (!anak) {
     return (

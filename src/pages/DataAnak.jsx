@@ -8,11 +8,12 @@ import ToolbarAnak from '../components/ToolbarAnak'
 import DaftarAnak from '../components/DaftarAnak'
 import PaginationAnak from '../components/PaginationAnak'
 import ConfirmDialog from '../components/ConfirmDialog'
+import { SkeletonDaftar, PeringatanError } from '../components/StatusData'
 import { useToast } from '../components/toastContext'
 
 const PER_HALAMAN_AWAL = 8
 
-function DataAnak({ daftarAnak, onHapus }) {
+function DataAnak({ daftarAnak, onHapus, memuat, pesanError, onMuatUlang }) {
   const toast = useToast()
   const [cari, setCari] = useState('')
   const [status, setStatus] = useState('Semua')
@@ -98,64 +99,73 @@ function DataAnak({ daftarAnak, onHapus }) {
         subjudul="Kelola data anak asuh Panti Asuhan Amal Mulia Qurani"
       />
 
-      <StatRingkasan daftarAnak={daftarAnak} />
-
-      <ToolbarAnak
-        cari={cari}
-        onCari={ubahCari}
-        status={status}
-        onStatus={ubahStatus}
-        gender={gender}
-        onGender={ubahGender}
-        urutan={urutan}
-        onUrutan={ubahUrutan}
-        mode={mode}
-        onMode={setMode}
-      />
-
-      {daftarAnak.length === 0 ? (
-        <div className="data-kosong">
-          <span className="data-kosong-icon">
-            <Users size={26} />
-          </span>
-          <h2>Belum ada data Anak Asuh</h2>
-          <p>
-            Daftar anak asuh masih kosong. Tambahkan data anak asuh pertama
-            untuk mulai mengelola.
-          </p>
-          <Link to="/tambah-anak" className="data-kosong-aksi">
-            <Plus size={16} />
-            Tambah Anak
-          </Link>
-        </div>
-      ) : anakTersaring.length === 0 ? (
-        <div className="data-kosong">
-          <span className="data-kosong-icon">
-            <Search size={26} />
-          </span>
-          <h2>Tidak ada anak asuh yang cocok</h2>
-          <p>
-            Coba ubah kata kunci pencarian atau filter status dan jenis kelamin.
-          </p>
-        </div>
+      {memuat ? (
+        <SkeletonDaftar />
+      ) : pesanError ? (
+        <PeringatanError pesan={pesanError} onMuatUlang={onMuatUlang} />
       ) : (
         <>
-          <DaftarAnak
-            daftarAnak={anakTampil}
+          <StatRingkasan daftarAnak={daftarAnak} />
+
+          <ToolbarAnak
+            cari={cari}
+            onCari={ubahCari}
+            status={status}
+            onStatus={ubahStatus}
+            gender={gender}
+            onGender={ubahGender}
+            urutan={urutan}
+            onUrutan={ubahUrutan}
             mode={mode}
-            onHapus={handleHapus}
+            onMode={setMode}
           />
 
-          <PaginationAnak
-            halaman={halamanAktif}
-            totalHalaman={totalHalaman}
-            onPilihHalaman={setHalaman}
-            perHalaman={perHalaman}
-            onPerHalaman={ubahPerHalaman}
-            total={anakTersaring.length}
-            mulai={mulai}
-            akhir={akhir}
-          />
+          {daftarAnak.length === 0 ? (
+            <div className="data-kosong">
+              <span className="data-kosong-icon">
+                <Users size={26} />
+              </span>
+              <h2>Belum ada data Anak Asuh</h2>
+              <p>
+                Daftar anak asuh masih kosong. Tambahkan data anak asuh pertama
+                untuk mulai mengelola.
+              </p>
+              <Link to="/tambah-anak" className="data-kosong-aksi">
+                <Plus size={16} />
+                Tambah Anak
+              </Link>
+            </div>
+          ) : anakTersaring.length === 0 ? (
+            <div className="data-kosong">
+              <span className="data-kosong-icon">
+                <Search size={26} />
+              </span>
+              <h2>Tidak ada anak asuh yang cocok</h2>
+              <p>
+                Coba ubah kata kunci pencarian atau filter status dan jenis
+                kelamin.
+              </p>
+            </div>
+          ) : (
+            <>
+              <DaftarAnak
+                daftarAnak={anakTampil}
+                mode={mode}
+                onHapus={handleHapus}
+              />
+
+              <PaginationAnak
+                halaman={halamanAktif}
+                totalHalaman={totalHalaman}
+                onPilihHalaman={setHalaman}
+                perHalaman={perHalaman}
+                onPerHalaman={ubahPerHalaman}
+                total={anakTersaring.length}
+                mulai={mulai}
+                akhir={akhir}
+              />
+            </>
+          )}
         </>
       )}
 

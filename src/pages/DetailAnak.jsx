@@ -14,6 +14,7 @@ import PageShell from '../components/PageShell'
 import PageHeader from '../components/PageHeader'
 import AvatarAnak from '../components/AvatarAnak'
 import SectionDetail from '../components/SectionDetail'
+import { SkeletonDetail, PeringatanError } from '../components/StatusData'
 import '../styles/components/KartuAnak.css'
 import '../styles/pages/DetailAnak.css'
 
@@ -26,10 +27,34 @@ function ItemDetail({ label, nilai }) {
   )
 }
 
-function DetailAnak({ daftarAnak }) {
+function DetailAnak({ daftarAnak, memuat, pesanError, onMuatUlang }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const anak = daftarAnak.find((item) => item.id === id)
+
+  if (memuat) {
+    return (
+      <PageShell>
+        <PageHeader
+          judul="Detail Anak Asuh"
+          subjudul="Informasi lengkap data anak asuh"
+        />
+        <SkeletonDetail />
+      </PageShell>
+    )
+  }
+
+  if (pesanError) {
+    return (
+      <PageShell>
+        <PageHeader
+          judul="Detail Anak Asuh"
+          subjudul="Informasi lengkap data anak asuh"
+        />
+        <PeringatanError pesan={pesanError} onMuatUlang={onMuatUlang} />
+      </PageShell>
+    )
+  }
 
   if (!anak) {
     return (
