@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import Login from './pages/Login'
@@ -8,10 +8,42 @@ import DetailAnak from './pages/DetailAnak'
 import TambahAnak from './pages/TambahAnak'
 import EditAnak from './pages/EditAnak'
 import { ToastProvider } from './components/ToastProvider'
-import { dataAnakAwal, buatIdAnak } from './data/anakAsuh'
+import { buatIdAnak } from './data/anakAsuh'
+import { ambilDaftarAnak } from './services/anakAsuhApi'
 
 function App() {
-  const [daftarAnak, setDaftarAnak] = useState(dataAnakAwal)
+  const [daftarAnak, setDaftarAnak] = useState([])
+  const [memuat, setMemuat] = useState(true)
+  const [pesanError, setPesanError] = useState('')
+  const [percobaan, setPercobaan] = useState(0)
+
+  useEffect(() => {
+    let dibatalkan = false
+
+    ambilDaftarAnak()
+      .then((data) => {
+        if (dibatalkan) return
+        setDaftarAnak(data)
+      })
+      .catch((error) => {
+        if (dibatalkan) return
+        setPesanError(error.message)
+      })
+      .finally(() => {
+        if (dibatalkan) return
+        setMemuat(false)
+      })
+
+    return () => {
+      dibatalkan = true
+    }
+  }, [percobaan])
+
+  function muatUlang() {
+    setMemuat(true)
+    setPesanError('')
+    setPercobaan((sebelumnya) => sebelumnya + 1)
+  }
 
   function tambahAnak(data) {
     setDaftarAnak((sebelumnya) => [
@@ -39,11 +71,26 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/data-anak"
-            element={<DataAnak daftarAnak={daftarAnak} onHapus={hapusAnak} />}
+            element={
+              <DataAnak
+                daftarAnak={daftarAnak}
+                onHapus={hapusAnak}
+                memuat={memuat}
+                pesanError={pesanError}
+                onMuatUlang={muatUlang}
+              />
+            }
           />
           <Route
             path="/data-anak/:id"
-            element={<DetailAnak daftarAnak={daftarAnak} />}
+            element={
+              <DetailAnak
+                daftarAnak={daftarAnak}
+                memuat={memuat}
+                pesanError={pesanError}
+                onMuatUlang={muatUlang}
+              />
+            }
           />
           <Route
             path="/tambah-anak"
@@ -52,7 +99,13 @@ function App() {
           <Route
             path="/edit-anak/:id"
             element={
-              <EditAnak daftarAnak={daftarAnak} onUpdate={updateAnak} />
+              <EditAnak
+                daftarAnak={daftarAnak}
+                onUpdate={updateAnak}
+                memuat={memuat}
+                pesanError={pesanError}
+                onMuatUlang={muatUlang}
+              />
             }
           />
         </Routes>
