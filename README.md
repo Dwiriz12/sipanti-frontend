@@ -1,16 +1,33 @@
-# React + Vite
+# SIPANTI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistem Informasi Pengelolaan Panti Asuhan Amal Mulia Qurani. Aplikasi ini dipakai pengurus untuk mengelola data anak asuh, mulai dari melihat daftar, detail, menambah data, sampai edit dan hapus.
 
-Currently, two official plugins are available:
+Project ini dibuat bertahap sebagai tugas Perancangan dan Pemrograman Web, mulai dari HTML/CSS, JavaScript, sampai React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Halaman yang ada
 
-## React Compiler
+- `/` — homepage panti
+- `/login` — form login pengurus
+- `/dashboard` — ringkasan data panti
+- `/data-anak` — daftar anak asuh, ada pencarian, filter, dan pagination
+- `/data-anak/:id` — detail satu anak asuh
+- `/tambah-anak` — form tambah anak asuh
+- `/edit-anak/:id` — form edit anak asuh
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Week 6 — React Dasar
 
-## Expanding the ESLint configuration
+Pada week ini tampilan yang sebelumnya dibuat dengan HTML/CSS dipindahkan ke React.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Routing pakai react-router-dom di `src/App.jsx`, tiap halaman punya route sendiri
+- Data anak asuh disimpan di state pakai `useState` di `App.jsx`, lalu dikirim ke halaman daftar, detail, tambah, dan edit lewat props
+- Menampilkan daftar pakai `.map()` dengan `key={anak.id}` di `DaftarAnak.jsx`
+- Form tambah dan edit pakai controlled component, semua input punya `value` dan `onChange`, plus validasi field wajib sebelum disimpan (`FormAnak.jsx`)
+- Conditional rendering di `DataAnak.jsx`, kalau datanya kosong muncul tulisan "Belum ada data Anak Asuh", kalau hasil filter kosong muncul pesan lain
+- Bisa tambah, edit, dan hapus data. Untuk hapus dan logout ada dialog konfirmasi dulu, setelah itu muncul notifikasi
+- CSS dipisah di folder `src/styles/`, jadi file komponen isinya hanya markup
+
+Catatan: di week 6 datanya masih array statis di dalam kode, belum mengambil dari server.
+
+## Screenshot
+
+Bukti tampilan tiap tahap ada di `docs/ss/week 6/`.
