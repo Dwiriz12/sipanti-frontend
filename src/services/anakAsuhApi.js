@@ -1,41 +1,58 @@
-const URL_DAFTAR_ANAK = '/api/anak-asuh.json'
+const URL_ANAK_ASUH = 'http://localhost:3000/anak-asuh'
 
-const JEDA_MINIMAL = 700
+    async function bacaJson(respon) {
+      if (!respon.ok) {
+        throw new Error(`Gagal mengakses server (HTTP 
+  ${respon.status}).`)
+      }
 
-export async function ambilDaftarAnak() {
-  const mulai = Date.now()
+      return respon.json()
+    }
 
-  let respon
+    export async function ambilDaftarAnak() {
+      const respon = await fetch(URL_ANAK_ASUH)
+      return bacaJson(respon)
+    }
 
-  try {
-    respon = await fetch(URL_DAFTAR_ANAK)
-  } catch {
-    throw new Error(
-      'Tidak dapat terhubung ke server. Periksa koneksi Anda lalu coba lagi.'
-    )
-  }
+    export async function tambahAnak(data) {
+      const respon = await fetch(URL_ANAK_ASUH, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rapikan(data)),
+      })
 
-  if (!respon.ok) {
-    throw new Error(`Gagal memuat data anak asuh (HTTP ${respon.status}).`)
-  }
+      return bacaJson(respon)
+    }
 
-  let data
+    export async function ubahAnak(id, data) {
+      const respon = await fetch(`${URL_ANAK_ASUH}/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rapikan(data)),
+      })
 
-  try {
-    data = await respon.json()
-  } catch {
-    throw new Error('Format data anak asuh tidak valid.')
-  }
+      return bacaJson(respon)
+    }
 
-  if (!Array.isArray(data)) {
-    throw new Error('Format data anak asuh tidak valid.')
-  }
+    export async function hapusAnak(id) {
+      const respon = await fetch(`${URL_ANAK_ASUH}/${id}`, {
+        method: 'DELETE',
+      })
 
-  const sisaJeda = JEDA_MINIMAL - (Date.now() - mulai)
+      return bacaJson(respon)
+    }
 
-  if (sisaJeda > 0) {
-    await new Promise((resolve) => setTimeout(resolve, sisaJeda))
-  }
+    function rapikan(data) {
+      const hasil = { ...data }
 
-  return data
-}
+      delete hasil.usia
+      delete hasil.foto
+
+      Object.keys(hasil).forEach((kunci) => {
+        if (hasil[kunci] === '' || hasil[kunci] === null) {
+          delete hasil[kunci]
+        }
+      })
+
+      return hasil
+    }

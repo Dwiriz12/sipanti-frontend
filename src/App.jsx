@@ -8,8 +8,12 @@ import DetailAnak from './pages/DetailAnak'
 import TambahAnak from './pages/TambahAnak'
 import EditAnak from './pages/EditAnak'
 import { ToastProvider } from './components/ToastProvider'
-import { buatIdAnak } from './data/anakAsuh'
-import { ambilDaftarAnak } from './services/anakAsuhApi'
+import {
+  ambilDaftarAnak,
+  tambahAnak as tambahAnakApi,
+  ubahAnak as ubahAnakApi,
+  hapusAnak as hapusAnakApi,
+} from './services/anakAsuhApi'
 
 function App() {
   const [daftarAnak, setDaftarAnak] = useState([])
@@ -45,21 +49,37 @@ function App() {
     setPercobaan((sebelumnya) => sebelumnya + 1)
   }
 
-  function tambahAnak(data) {
-    setDaftarAnak((sebelumnya) => [
-      { ...data, id: buatIdAnak(sebelumnya) },
-      ...sebelumnya
-    ])
+  async function tambahAnak(data) {
+    try {
+      const anakBaru = await tambahAnakApi(data)
+      setDaftarAnak((sebelumnya) => [anakBaru,
+        ...sebelumnya])
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
-  function updateAnak(id, data) {
-    setDaftarAnak((sebelumnya) =>
-      sebelumnya.map((anak) => (anak.id === id ? { ...anak, ...data, id } : anak))
-    )
+  async function updateAnak(id, data) {
+    try {
+      const hasil = await ubahAnakApi(id, data)
+      setDaftarAnak((sebelumnya) =>
+        sebelumnya.map((anak) => (anak.id === id ? hasil :
+          anak))
+      )
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
-  function hapusAnak(id) {
-    setDaftarAnak((sebelumnya) => sebelumnya.filter((anak) => anak.id !== id))
+  async function hapusAnak(id) {
+    try {
+      await hapusAnakApi(id)
+      setDaftarAnak((sebelumnya) =>
+        sebelumnya.filter((anak) => anak.id !== id)
+      )
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (
